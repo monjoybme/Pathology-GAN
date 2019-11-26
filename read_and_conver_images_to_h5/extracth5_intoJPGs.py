@@ -3,26 +3,35 @@ import matplotlib.pyplot as plt
 import imageio
 from PIL import Image
 import numpy as np
-import pdb
+#import pdb
 import os
 import pandas as pd
-hdf = h5py.File('hdf5_vgh_nki_he_train.h5', 'r')
+import pdb
+hdf = h5py.File('data.h5', 'r')
 print("Keys: %s" % hdf.keys())
 
-a_group_key = list(hdf.keys())[1]
-a_group_key1 = list(hdf.keys())[0]
+
+path= '/home/msaha6/Downloads/Pathology-GAN/dataset/vgh_nki/he/patches_h224_w224/training_data/'
+extracted_image_path = '/home/msaha6/Downloads/Pathology-GAN/dataset/vgh_nki/he/patches_h224_w224/'
+a_group_key = list(hdf.keys())[0]
+#a_group_key1 = list(hdf.keys())[0]
 data = list(hdf[a_group_key])
 #print(data)
 #print(a_group_key)
 #print(a_group_key1)
 
-#pdb.set_trace()
-#array = hdf["test_img"][:]
-#for image in range(len(array)):
-    #img=Image.fromarray(array[image].astype('uint8'), 'RGB')
-    #print(os.path.basename(array[image]))
-    #img.save("test.jpg", "JPEG")
-    #img.show()
 
-array = hdf["train_labels"][:]
-pd.DataFrame(array).to_csv("train_labels.csv")
+array = hdf["train_img"][:]
+for image in range(len(array)):
+    #pdb.set_trace()
+    img=Image.fromarray(array[image].astype('uint8'), 'RGB')
+    fullpath = os.path.join(extracted_image_path,'%s.png' % image)
+    img.save(fullpath)
+    
+    #img.show()
+    
+
+
+
+#array = hdf["train_labels"][:]
+#pd.DataFrame(array).to_csv("train_labels.csv")
